@@ -1,11 +1,7 @@
-import React from "react";
-import {
-  Button,
-  Form,
-  FloatingLabel,
-} from "react-bootstrap";
-import { useForm } from "react-hook-form";
-import moment from 'moment'
+import React from 'react';
+import { Button, Form, FloatingLabel } from 'react-bootstrap';
+import { useForm } from 'react-hook-form';
+import moment from 'moment';
 
 export const EmployeePayslipForm = (props) => {
   const { formFns, values, employees } = props;
@@ -26,12 +22,12 @@ export const EmployeePayslipForm = (props) => {
         <FloatingLabel label="Employee">
           <Form.Select
             className={
-              Boolean(errors && errors.employee_id?.type === "required")
-                ? "border border-danger"
-                : ""
+              Boolean(errors && errors.employee_id?.type === 'required')
+                ? 'border border-danger'
+                : ''
             }
             defaultValue={values?.employee_id}
-            {...register("employee_id", { required: true })}
+            {...register('employee_id', { required: true })}
             readOnly={Boolean(values)}
             disabled={Boolean(values)}
             placeholder="Employee"
@@ -51,11 +47,11 @@ export const EmployeePayslipForm = (props) => {
           <Form.Control
             type="text"
             className={
-              Boolean(errors && errors.payslip_for_date?.type === "required")
-                ? "border border-danger"
-                : ""
+              Boolean(errors && errors.payslip_for_date?.type === 'required')
+                ? 'border border-danger'
+                : ''
             }
-            {...register("payslip_for_date", { required: true })}
+            {...register('payslip_for_date', { required: true })}
             value={moment().format('MMMM - YYYY')}
             readOnly
             placeholder="Payroll/Payslip for Date"
@@ -68,13 +64,13 @@ export const EmployeePayslipForm = (props) => {
           <Form.Control
             type="number"
             className={
-              Boolean(errors && errors.salary_amount?.type === "required")
-                ? "border border-danger"
-                : ""
+              Boolean(errors && errors.salary_amount?.type === 'required')
+                ? 'border border-danger'
+                : ''
             }
-            {...register("salary_amount", { required: true })}
-            defaultValue={values?.salary_amount}
-            readOnly={Boolean(values)}
+            {...register('salary_amount', { required: true })}
+            defaultValue={Number(400).toFixed(2)}
+            readOnly
             placeholder="Salary Amount"
           />
         </FloatingLabel>
@@ -85,11 +81,11 @@ export const EmployeePayslipForm = (props) => {
           <Form.Control
             type="number"
             className={
-              Boolean(errors && errors.deduction_amount?.type === "required")
-                ? "border border-danger"
-                : ""
+              Boolean(errors && errors.deduction_amount?.type === 'required')
+                ? 'border border-danger'
+                : ''
             }
-            {...register("deduction_amount", { required: true })}
+            {...register('deduction_amount', { required: true })}
             defaultValue={values?.deduction_amount}
             readOnly={Boolean(values)}
             placeholder="Deduction Amount"
@@ -102,12 +98,12 @@ export const EmployeePayslipForm = (props) => {
           <Form.Control
             type="text0"
             className={
-              Boolean(errors && errors.deduction_reason?.type === "required")
-                ? "border border-danger"
-                : ""
+              Boolean(errors && errors.deduction_reason?.type === 'required')
+                ? 'border border-danger'
+                : ''
             }
-            {...register("deduction_reason", { required: true })}
-            style={{ height: "130px" }}
+            {...register('deduction_reason', { required: true })}
+            style={{ height: '130px' }}
             as="textarea"
             defaultValue={values?.deduction_reason}
             readOnly={Boolean(values)}
@@ -121,11 +117,11 @@ export const EmployeePayslipForm = (props) => {
           <Form.Control
             type="number"
             className={
-              Boolean(errors && errors.no_of_absents?.type === "required")
-                ? "border border-danger"
-                : ""
+              Boolean(errors && errors.no_of_absents?.type === 'required')
+                ? 'border border-danger'
+                : ''
             }
-            {...register("no_of_absents", { required: true })}
+            {...register('no_of_absents', { required: true })}
             defaultValue={values?.no_of_absents}
             readOnly={Boolean(values)}
             placeholder="No. of Absents"
@@ -138,11 +134,11 @@ export const EmployeePayslipForm = (props) => {
           <Form.Control
             type="number"
             className={
-              Boolean(errors && errors.no_of_lates?.type === "required")
-                ? "border border-danger"
-                : ""
+              Boolean(errors && errors.no_of_lates?.type === 'required')
+                ? 'border border-danger'
+                : ''
             }
-            {...register("no_of_lates", { required: true })}
+            {...register('no_of_lates', { required: true })}
             defaultValue={values?.no_of_lates}
             readOnly={Boolean(values)}
             placeholder="No. of Lates"
@@ -155,12 +151,12 @@ export const EmployeePayslipForm = (props) => {
           <Form.Control
             type="text0"
             className={
-              Boolean(errors && errors.deduction_reason?.type === "required")
-                ? "border border-danger"
-                : ""
+              Boolean(errors && errors.deduction_reason?.type === 'required')
+                ? 'border border-danger'
+                : ''
             }
-            {...register("deduction_reason", { required: true })}
-            style={{ height: "130px" }}
+            {...register('deduction_reason', { required: true })}
+            style={{ height: '130px' }}
             as="textarea"
             defaultValue={values?.deduction_reason}
             readOnly={Boolean(values)}
@@ -169,9 +165,7 @@ export const EmployeePayslipForm = (props) => {
         </FloatingLabel>
       </Form.Group>
 
-      {Boolean(!values) && (
-        <Button type="submit">SUBMIT EMPLOYEE PAYSLIP</Button>
-      )}
+      {Boolean(!values) && <Button type="submit">SUBMIT EMPLOYEE PAYSLIP</Button>}
     </Form>
   );
 };
