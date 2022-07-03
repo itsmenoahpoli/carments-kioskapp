@@ -12,6 +12,21 @@ export const EmployeePayslipForm = (props) => {
     formState: { errors },
   } = useForm();
 
+  const currentMonthCutoff = moment().format('MMMM DD');
+
+  const getMonthCutOff = () => {
+    const currentMonth = moment().format('MMMM');
+    const monthDay = Number(currentMonthCutoff.split(' ')[1]);
+
+    console.log(moment().daysInMonth());
+
+    if (monthDay < 15) {
+      return currentMonth + '1-15 (1st cut-off)';
+    }
+
+    return currentMonth + '16-30 (2nd cut-off)';
+  };
+
   const handleFormSubmit = async (formValues) => {
     await formFns.formSubmitFn(formValues);
   };
@@ -52,7 +67,7 @@ export const EmployeePayslipForm = (props) => {
                 : ''
             }
             {...register('payslip_for_date', { required: true })}
-            value={moment().format('MMMM - YYYY')}
+            defaultValue={getMonthCutOff()}
             readOnly
             placeholder="Payroll/Payslip for Date"
           />
@@ -60,105 +75,43 @@ export const EmployeePayslipForm = (props) => {
       </Form.Group>
 
       <Form.Group className="form-group">
-        <FloatingLabel label="Salary Amount">
+        <FloatingLabel label="Salary Amount per day in (₱) Pesos">
           <Form.Control
             type="number"
-            className={
-              Boolean(errors && errors.salary_amount?.type === 'required')
-                ? 'border border-danger'
-                : ''
-            }
-            {...register('salary_amount', { required: true })}
-            defaultValue={Number(400).toFixed(2)}
+            defaultValue={Number(570).toFixed(2)}
             readOnly
-            placeholder="Salary Amount"
+            placeholder="Salary Amount per day"
           />
         </FloatingLabel>
       </Form.Group>
 
       <Form.Group className="form-group">
-        <FloatingLabel label="Deduction Amount">
+        <FloatingLabel label="Cut-off Salary Amount in (₱) Pesos">
           <Form.Control
             type="number"
-            className={
-              Boolean(errors && errors.deduction_amount?.type === 'required')
-                ? 'border border-danger'
-                : ''
-            }
-            {...register('deduction_amount', { required: true })}
-            defaultValue={values?.deduction_amount}
-            readOnly={Boolean(values)}
-            placeholder="Deduction Amount"
+            {...register('salary_amount', { required: true })}
+            defaultValue={Number(8550).toFixed(2)}
+            readOnly
+            placeholder="Salary Amount per cut-off"
           />
         </FloatingLabel>
+
+        <small className="text-muted">Fixed rate per working days</small>
       </Form.Group>
 
       <Form.Group className="form-group">
-        <FloatingLabel label="Deduction Reason">
+        <FloatingLabel label="Remarks">
           <Form.Control
             type="text0"
             className={
-              Boolean(errors && errors.deduction_reason?.type === 'required')
+              Boolean(errors && errors.additional_details?.type === 'required')
                 ? 'border border-danger'
                 : ''
             }
-            {...register('deduction_reason', { required: true })}
+            {...register('additional_details', { required: true })}
             style={{ height: '130px' }}
             as="textarea"
-            defaultValue={values?.deduction_reason}
-            readOnly={Boolean(values)}
-            placeholder="Deduction Reason"
-          />
-        </FloatingLabel>
-      </Form.Group>
-
-      <Form.Group className="form-group">
-        <FloatingLabel label="No. of Absents">
-          <Form.Control
-            type="number"
-            className={
-              Boolean(errors && errors.no_of_absents?.type === 'required')
-                ? 'border border-danger'
-                : ''
-            }
-            {...register('no_of_absents', { required: true })}
-            defaultValue={values?.no_of_absents}
-            readOnly={Boolean(values)}
-            placeholder="No. of Absents"
-          />
-        </FloatingLabel>
-      </Form.Group>
-
-      <Form.Group className="form-group">
-        <FloatingLabel label="No. of Lates">
-          <Form.Control
-            type="number"
-            className={
-              Boolean(errors && errors.no_of_lates?.type === 'required')
-                ? 'border border-danger'
-                : ''
-            }
-            {...register('no_of_lates', { required: true })}
-            defaultValue={values?.no_of_lates}
-            readOnly={Boolean(values)}
-            placeholder="No. of Lates"
-          />
-        </FloatingLabel>
-      </Form.Group>
-
-      <Form.Group className="form-group">
-        <FloatingLabel label="Additional Details">
-          <Form.Control
-            type="text0"
-            className={
-              Boolean(errors && errors.deduction_reason?.type === 'required')
-                ? 'border border-danger'
-                : ''
-            }
-            {...register('deduction_reason', { required: true })}
-            style={{ height: '130px' }}
-            as="textarea"
-            defaultValue={values?.deduction_reason}
+            defaultValue={values?.additional_details}
             readOnly={Boolean(values)}
             placeholder="Additional Details"
           />

@@ -1,16 +1,17 @@
-import React from "react";
-import { Container, Button, Form, Card, Modal } from "react-bootstrap";
+import React from 'react';
+import { Container, Button, Form, Card, Modal } from 'react-bootstrap';
+import moment from 'moment';
 
-import { DashboardLayout } from "components/layouts";
-import { TableBuilder } from "components/tables";
-import { EmployeePayslipForm } from "components/forms/by-modules";
-import { EmployeePayslipsService, EmployeeService } from "lib/services";
+import { DashboardLayout } from 'components/layouts';
+import { TableBuilder } from 'components/tables';
+import { EmployeePayslipForm } from 'components/forms/by-modules';
+import { EmployeePayslipsService, EmployeeService } from 'lib/services';
 
 const employeePayslipsService = new EmployeePayslipsService();
 const employeesService = new EmployeeService();
 
 const EmployeePayslipsPage = () => {
-  const [search, setSearch] = React.useState("");
+  const [search, setSearch] = React.useState('');
   const [data, setData] = React.useState([]);
   const [employees, setEmployees] = React.useState([]);
   const [loading, setLoading] = React.useState(false);
@@ -28,7 +29,7 @@ const EmployeePayslipsPage = () => {
   };
 
   const getEmployees = async () => {
-    const { data } = await employeesService.getAll("");
+    const { data } = await employeesService.getAll('');
 
     setEmployees(data);
   };
@@ -39,14 +40,14 @@ const EmployeePayslipsPage = () => {
         employeePayslipModal.data.id,
         formData
       );
-      await getEmployeePayslips("");
+      await getEmployeePayslips('');
       handleEmployeePayslipModal(false, null);
 
       return;
     }
 
     await employeePayslipsService.createEmployeePayslip(formData);
-    await getEmployeePayslips("");
+    await getEmployeePayslips('');
 
     handleEmployeePayslipModal(false, null);
   };
@@ -66,39 +67,35 @@ const EmployeePayslipsPage = () => {
   const tableColumns = React.useMemo(
     () => [
       {
-        name: "Payslip No.",
+        name: 'Payslip No.',
         selector: (row) => row.payslip_no,
         sortable: true,
       },
       {
-        name: "Name",
+        name: 'Name',
         selector: (row) => row.employee.name,
         sortable: true,
       },
       {
-        name: "Salary Amount",
+        name: 'Salary Amount',
         selector: (row) => row.salary_amount,
         sortable: true,
         cell: (row) => `₱ ${row.salary_amount}`,
       },
       {
-        name: "Deduction Amount",
-        selector: (row) => row.deduction_amount,
+        name: 'Salary Cut-off Month',
+        selector: (row) => row.payslip_for_date,
         sortable: true,
-        cell: (row) => `₱ ${row.deduction_amount}`,
+        cell: (row) => `₱ ${row.payslip_for_date}`,
       },
       {
-        name: "Deduction Reason",
-        selector: (row) => row.deduction_reason,
-        sortable: true,
-      },
-      {
-        name: "Payroll Month",
+        name: 'Payroll Month',
         selector: (row) => row.payroll_for_date,
-        sortable: true
+        sortable: true,
+        cell: () => String(moment().format('MMMM YYYY')).toUpperCase(),
       },
       {
-        name: "Actions",
+        name: 'Actions',
         selector: (row) => row.id,
         sortable: true,
         right: true,
@@ -120,11 +117,11 @@ const EmployeePayslipsPage = () => {
 
   React.useEffect(() => {
     getEmployeePayslips(search);
-    getEmployees("");
+    getEmployees('');
   }, []);
 
   React.useEffect(() => {
-    if (search !== "") {
+    if (search !== '') {
       getEmployeePayslips(search);
     }
   }, [search]);
@@ -132,10 +129,7 @@ const EmployeePayslipsPage = () => {
     <DashboardLayout title="Employee Payslips">
       <Container fluid className="datatable-header">
         <div>
-          <Button
-            variant="primary"
-            onClick={() => handleEmployeePayslipModal(true, null)}
-          >
+          <Button variant="primary" onClick={() => handleEmployeePayslipModal(true, null)}>
             Add New Employee Payslip
           </Button>
         </div>
